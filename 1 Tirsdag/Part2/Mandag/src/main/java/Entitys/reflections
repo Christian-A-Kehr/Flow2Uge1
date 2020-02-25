@@ -1,0 +1,3 @@
+Relational Mapping:
+unidirectional @OneToMany association, it means you can only access the relationship from the parent side where the foreign key resides.
+bidirectional @OneToMany association, you can navigate the association in both ways, either from the parent or from the child side
