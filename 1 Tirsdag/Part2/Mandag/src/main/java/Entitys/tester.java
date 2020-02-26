@@ -19,12 +19,13 @@ public class tester {
     
     public static void main(String[] args) {
         Persistence.generateSchema("pu", null);
-//    EntityManager em = emf.createEntityManager();
+    EntityManager em = emf.createEntityManager();
 ////    
-//    em.getTransaction().begin();
+    em.getTransaction().begin();
     //Assingment 1 - 3
-//    Customer c1 = new Customer("Bob", "bobsen");
-//    Customer c2 = new Customer("Lars", "Petersen");
+    Customer c1 = new Customer("Bob", "bobsen");
+    Customer c2 = new Customer("Lars", "Petersen");
+//    c1.addAdress()
 //    //Assignmet 4
 ////    c1.addPhone("55 55 55 55", "Bobs Phone");
 ////    c2.addPhone("66 66 66 66", "Lars Pone or the devils");
@@ -34,9 +35,9 @@ public class tester {
 ////    c2.addHobby("Life");
 //    
 ////    
-//    em.persist(c1);
-//    em.persist(c2);
+    em.persist(c1);
+    em.persist(c2);
 ////    
-//    em.getTransaction().commit();
+    em.getTransaction().commit();
     }
 }
