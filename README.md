@@ -1,9 +1,7 @@
 Flow2Uge1
 
-AfleveringUge2
 
-
-Tirsdag
+Tirsdag (project called mandag.. doh)
 How far you got with a solution:
 
 Where the solution to each exercise can be found in your commit:

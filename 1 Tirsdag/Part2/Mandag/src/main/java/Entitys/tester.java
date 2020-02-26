@@ -18,11 +18,11 @@ public class tester {
     
     
     public static void main(String[] args) {
-        Persistence.generateSchema("Flow2Uge1Dag1", null);
+        Persistence.generateSchema("pu", null);
 //    EntityManager em = emf.createEntityManager();
-//    
+////    
 //    em.getTransaction().begin();
-//    //Assingment 1 - 3
+    //Assingment 1 - 3
 //    Customer c1 = new Customer("Bob", "bobsen");
 //    Customer c2 = new Customer("Lars", "Petersen");
 //    //Assignmet 4
@@ -33,10 +33,10 @@ public class tester {
 ////    c1.addHobby("Cloth");
 ////    c2.addHobby("Life");
 //    
-//    
+////    
 //    em.persist(c1);
 //    em.persist(c2);
-//    
+////    
 //    em.getTransaction().commit();
     }
 }

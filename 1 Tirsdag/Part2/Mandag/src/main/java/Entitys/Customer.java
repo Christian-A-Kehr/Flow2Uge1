@@ -6,10 +6,13 @@
 package Entitys;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,6 +26,16 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName, LastName;
+
+    // Assignmet 1
+//    @OneToOne
+//    private Address address;
+    // assingment 2
+//    @OneToOne 
+//    private Address address;
+    
+    @OneToMany
+    private List<Address> addresses = new ArrayList();
 
     public Customer() {
     }

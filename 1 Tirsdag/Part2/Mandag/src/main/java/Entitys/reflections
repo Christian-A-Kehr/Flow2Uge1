@@ -1,3 +1,15 @@
 Relational Mapping:
 unidirectional @OneToMany association, it means you can only access the relationship from the parent side where the foreign key resides.
 bidirectional @OneToMany association, you can navigate the association in both ways, either from the parent or from the child side
+
+1. One to One – Unidirectiona
+    understand (100% exam relevant) how an OO-language implements OneToOne relations and how a relational database does the same:
+    
+    Language: by placing an unidirectional @one to one at address. Java knows that the entitys is conneted    
+    Database: Database uses a foreign key placed in the owner table 
+
+2.  One to One – Bidirectional
+    
+3) OneToMany (unidirectional)
+    How many tables were generated? Explain the purpose of each of the tables 
+    Number of tables = 3 ADDRESS = adress entity, CUSTOMER = Customer entity , CUSTOMER_ADDRESS = Join Table

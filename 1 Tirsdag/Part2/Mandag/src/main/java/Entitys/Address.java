@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,6 +24,11 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName, lastName;
+    
+    //assignmet 2
+    // Next to lines is genereted from customer because of bidirectional @one to one. and chosing name in wizard
+//    @OneToOne(mappedBy = "address")
+//    private Customer customer;
     
     public Integer getId() {
         return id;
