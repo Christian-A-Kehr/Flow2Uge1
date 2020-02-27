@@ -69,13 +69,21 @@ public class PersonFacade {
             em.close();
         }
     }
+//  removes almost all persons in DB ask teacher
 
     public PersonDTO deletePerson(int id) {
         EntityManager em = getEntityManager();
+        PersonDTO removed = null;
         try {
+            System.out.println("ID = " + id);
+            em.getTransaction().begin();
             Person entity = em.find(Person.class, id);
-            PersonDTO removed = new PersonDTO(entity);
-          em.remove(entity);
+            if (entity != null) {
+                removed = new PersonDTO(entity);
+                em.remove(entity);
+            }
+
+            em.getTransaction().commit();
             return removed;
 
         } finally {
@@ -85,9 +93,10 @@ public class PersonFacade {
 
     public PersonDTO getPerson(int id) {
         EntityManager em = getEntityManager();
+        
         try {
             Person entity = em.find(Person.class, id);
-            PersonDTO personDTO = new PersonDTO(entity.getFirstName(), entity.getLastName(), entity.getPhone());
+            PersonDTO personDTO = new PersonDTO(id ,entity.getFirstName(), entity.getLastName(), entity.getPhone());
             return personDTO;
 
         } finally {
@@ -97,11 +106,12 @@ public class PersonFacade {
 
     public List<PersonDTO> getAllPersons() {
         EntityManager em = getEntityManager();
+        
         try {
             List<PersonDTO> returnList = new ArrayList();
-            TypedQuery<Person> persons = em.createQuery("SELECT p FROM Person p",Person.class);
+            TypedQuery<Person> persons = em.createQuery("SELECT p FROM Person p", Person.class);
             List<Person> list = persons.getResultList();
-            for (Person p : list ){
+            for (Person p : list) {
                 returnList.add(new PersonDTO(p));
             }
             return returnList;
@@ -114,16 +124,18 @@ public class PersonFacade {
     public PersonDTO editPerson(PersonDTO p) {
         EntityManager em = getEntityManager();
         try {
-             Person entity = em.find(Person.class, p.getId());
-             Date date = new Date();
-             Person edit = new Person(p.getfName(), p.getlName(), p.getPhone(), entity.getCreated(), date);
-             em.merge(edit);
-             em.getTransaction().commit();
-             // confirm via test or method? 
-             Person getEdit = em.find(Person.class ,p.getId());
-             PersonDTO confirm = new PersonDTO(getEdit);
-             // return is to confrim changes was corret uses if(for check) + custom exception to as throw = fail. 
-             return confirm;
+            em.getTransaction().begin();
+            Person entity = em.find(Person.class, p.getId());
+            entity.setFirstName(p.getfName());
+            entity.setLastName(p.getlName());
+            entity.setPhone(p.getPhone());
+            entity.setDate();
+            em.getTransaction().commit();
+            // confirm via test or method? 
+            Person getEdit = em.find(Person.class, p.getId());
+            PersonDTO confirm = new PersonDTO(getEdit);
+            // return is to confrim changes was corret uses if(for check) + custom exception to as throw = fail. 
+            return confirm;
 
         } finally {
             em.close();

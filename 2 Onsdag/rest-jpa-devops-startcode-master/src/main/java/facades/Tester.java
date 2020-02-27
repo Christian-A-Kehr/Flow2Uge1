@@ -5,6 +5,7 @@
  */
 package facades;
 
+import dto.PersonDTO;
 import entities.Person;
 import java.util.Date;
 import javax.persistence.EntityManager;
@@ -16,21 +17,40 @@ import javax.persistence.Persistence;
  * @author Christian
  */
 public class Tester {
-     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-    
-    
+
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+
+    //teste methods
     public static void main(String[] args) {
-       // Persistence.generateSchema("pu", null);
-    EntityManager em = emf.createEntityManager();
+        // Persistence.generateSchema("pu", null);
+        EntityManager em = emf.createEntityManager();
+        PersonFacade personFacade = facades.PersonFacade.getFacadeExample(emf);
+        Date date = new Date();
+        Person p1 = new Person("Bob", "theBuilder", "555", date, date);
+        Person p2 = new Person("James", "Bond", "007", date, date);
+        Person p3 = new Person("He", "Man", "1970", date, date);
+        //dto
+
 ////    
-    Date date = new Date();
-    em.getTransaction().begin();
-    Person p1 = new Person("Bob", "theBuilder", "555", date, date);
-    Person p2 = new Person("James", "Bond", "007", date, date);
-    
-    em.persist(p1);
-    em.persist(p2);
+        em.getTransaction().begin();
+        em.persist(p1);
+        em.persist(p2);
+        em.persist(p3);
+        em.getTransaction().commit();
+        em.getTransaction().begin();
+        //addPerson (Works)
+        personFacade.addPerson("Don Diego", "De la Vega", "52");
+        //deletePerson (work)
+        personFacade.deletePerson(p2.getId());
 ////    
-    em.getTransaction().commit();
+        // getPersonById (Works)
+        System.out.println("Finde Zorro = " + personFacade.getPerson(p1.getId()));
+
+// getAllPersons (works)
+        System.err.println("All persons = " + personFacade.getAllPersons());
+        PersonDTO p4 = new PersonDTO(p3.getId(), "Prince", "Aiden", "12345");
+// edidtPerson (works)
+        personFacade.editPerson(p4);
+        em.getTransaction().commit();
     }
 }
