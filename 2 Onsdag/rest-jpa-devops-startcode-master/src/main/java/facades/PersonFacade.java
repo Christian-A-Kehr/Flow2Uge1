@@ -2,8 +2,9 @@ package facades;
 
 import java.util.Date;
 import dto.PersonDTO;
+import dto.PersonsDTO;
 import entities.Person;
-import java.util.ArrayList;
+import exceptions.PersonNotFoundException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,7 +14,7 @@ import javax.persistence.TypedQuery;
  *
  * Rename Class to a relevant name Add add relevant facade methods
  */
-public class PersonFacade {
+public class PersonFacade implements IPersonFacade {
 
     private static PersonFacade instance;
     private static EntityManagerFactory emf;
@@ -51,6 +52,7 @@ public class PersonFacade {
 
     }
 
+    @Override
     public PersonDTO addPerson(String fName, String lName, String phone) {
         EntityManager em = getEntityManager();
         try {
@@ -71,7 +73,8 @@ public class PersonFacade {
     }
 //  removes almost all persons in DB ask teacher
 
-    public PersonDTO deletePerson(int id) {
+    @Override
+    public PersonDTO deletePerson(int id) throws PersonNotFoundException {
         EntityManager em = getEntityManager();
         PersonDTO removed = null;
         try {
@@ -81,8 +84,9 @@ public class PersonFacade {
             if (entity != null) {
                 removed = new PersonDTO(entity);
                 em.remove(entity);
+            } else {
+                throw new PersonNotFoundException("Person not found");
             }
-
             em.getTransaction().commit();
             return removed;
 
@@ -91,51 +95,96 @@ public class PersonFacade {
         }
     }
 
-    public PersonDTO getPerson(int id) {
+    @Override
+    public PersonDTO getPerson(int id) throws PersonNotFoundException {
         EntityManager em = getEntityManager();
-        
+
         try {
             Person entity = em.find(Person.class, id);
-            PersonDTO personDTO = new PersonDTO(id ,entity.getFirstName(), entity.getLastName(), entity.getPhone());
-            return personDTO;
+            if (entity != null) {
+                PersonDTO personDTO = new PersonDTO(id, entity.getFirstName(), entity.getLastName(), entity.getPhone());
+                return personDTO;
+
+            } else {
+                throw new PersonNotFoundException("Person not found");
+            }
 
         } finally {
             em.close();
         }
     }
+    /////// return methods..\\\\\\\\\\\\\\\\\\\\\
+//    public List<PersonDTO> getAllPersons() {
+//        EntityManager em = getEntityManager();
+//        
+//        try {
+//            List<PersonDTO> returnList = new ArrayList();
+//            TypedQuery<Person> persons = em.createQuery("SELECT p FROM Person p", Person.class);
+//            List<Person> list = persons.getResultList();
+//            for (Person p : list) {
+//                returnList.add(new PersonDTO(p));
+//            }
+//            return returnList;
+//
+//        } finally {
+//            em.close();
+//        }
+//    }
 
-    public List<PersonDTO> getAllPersons() {
+//    public List<PersonDTO> getAllPersons() {
+//        EntityManager em = getEntityManager();
+//        
+//        try {
+//            List<PersonDTO> returnList = new ArrayList();
+//            TypedQuery<Person> persons = em.createQuery("SELECT p FROM Person p", Person.class);
+//            List<Person> list = persons.getResultList();
+//            for (Person p : list) {
+//                returnList.add(new PersonDTO(p));
+//            }
+//            return returnList;
+//
+//        } finally {
+//            em.close();
+//        }
+//    }
+    @Override
+    public PersonsDTO getAllPersons() {
         EntityManager em = getEntityManager();
-        
+
         try {
-            List<PersonDTO> returnList = new ArrayList();
             TypedQuery<Person> persons = em.createQuery("SELECT p FROM Person p", Person.class);
             List<Person> list = persons.getResultList();
-            for (Person p : list) {
-                returnList.add(new PersonDTO(p));
-            }
-            return returnList;
+            PersonsDTO done = new PersonsDTO(list);
+            return done;
 
         } finally {
             em.close();
         }
     }
 
-    public PersonDTO editPerson(PersonDTO p) {
+    @Override
+    public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException {
         EntityManager em = getEntityManager();
+
         try {
-            em.getTransaction().begin();
-            Person entity = em.find(Person.class, p.getId());
-            entity.setFirstName(p.getfName());
-            entity.setLastName(p.getlName());
-            entity.setPhone(p.getPhone());
-            entity.setDate();
-            em.getTransaction().commit();
-            // confirm via test or method? 
-            Person getEdit = em.find(Person.class, p.getId());
-            PersonDTO confirm = new PersonDTO(getEdit);
-            // return is to confrim changes was corret uses if(for check) + custom exception to as throw = fail. 
-            return confirm;
+            Person tryFind = em.find(Person.class, p.getId());
+            if (tryFind != null) {
+                em.getTransaction().begin();
+                Person entity = em.find(Person.class, p.getId());
+                entity.setFirstName(p.getfName());
+                entity.setLastName(p.getlName());
+                entity.setPhone(p.getPhone());
+                entity.setDate();
+                em.getTransaction().commit();
+                // confirm via test or method? 
+                Person getEdit = em.find(Person.class, p.getId());
+                PersonDTO confirm = new PersonDTO(getEdit);
+                // return is to confrim changes was corret uses if(for check) + custom exception to as throw = fail. 
+                return confirm;
+
+            } else {
+                throw new PersonNotFoundException("Person not found");
+            }
 
         } finally {
             em.close();

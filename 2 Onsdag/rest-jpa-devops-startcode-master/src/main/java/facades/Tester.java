@@ -7,6 +7,7 @@ package facades;
 
 import dto.PersonDTO;
 import entities.Person;
+import exceptions.PersonNotFoundException;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,12 +17,12 @@ import javax.persistence.Persistence;
  *
  * @author Christian
  */
-public class Tester {
+public class Tester  {
 
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
     //teste methods
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PersonNotFoundException{
         // Persistence.generateSchema("pu", null);
         EntityManager em = emf.createEntityManager();
         PersonFacade personFacade = facades.PersonFacade.getFacadeExample(emf);
