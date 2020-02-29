@@ -27,9 +27,6 @@ public class Customer implements Serializable {
     private Integer id;
     private String name, email;
     
-    @OneToMany
-    private List<Address> addresses = new ArrayList();
-
     public Customer() {
     }
 
@@ -59,7 +56,8 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "Customer{" + "id=" + id + ", name=" + name + ", email=" + email + ", addresses=" + addresses + '}';
+        return "Customer{" + "id=" + id + ", name=" + name + ", email=" + email + '}';
     }
+
 
 }
