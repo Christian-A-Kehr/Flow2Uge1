@@ -3,6 +3,9 @@
   <persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Entitys.Customer</class>
+    <class>Entitys.Order</class>
+    <class>Entitys.OrderLine</class>
+    <class>Entitys.ItemType</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/Flow2Uge1Dag1"/>
       <property name="javax.persistence.jdbc.user" value="dev"/>
