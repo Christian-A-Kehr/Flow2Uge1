@@ -1,0 +1,46 @@
+General part:
+Explain the rationale behind the topic Object Relational Mapping and the Pros and Cons in using ORM:
+    ORM is a technique that lets you query and manipulate data usually from a database using an object-oriented programing. 
+        Pros:
+            - You only write your model once, which makes it far easier to update and maintain.
+            
+            - A lot of things are done for you, from handling the underlying database connection(s) to localisation.
+
+            - Allows developers the use of a quarry language, meaning they don’t "need" to learn the DB language.   
+        
+            - SQL injection is a lot more difficult as queries are prepared and sanitised.
+
+            - It can improve the formation of the underlying SQL. Developers can sometimes be bad at forming SQL.
+
+            - When you change the underlying database, you do not have to rewrite code.
+
+            - Models use OOP, which means you an extend and inherit from Models.
+    
+        Cons:
+            - While many CRUD (create, read, update and delete) queries run without performance issues, more complex queries can lead to performance issues if not written properly.
+            - -	If the developer isn’t focusing on the database model (tag names and relationships between entities), then this may lead to poorly design databases and code structure.  
+        
+
+Explain the JPA strategy for handling Object Relational Mapping and important classes/annotations involved:
+        Mapping Directions:
+            Mapping Directions are divided into two parts: -
+                - Unidirectional relationship - In this relationship, only one entity can refer the properties to another. It contains only one owing side that specifies how an update can be made in the database.
+                - Bidirectional relationship - This relationship contains an owning side as well as an inverse side. So here every entity has a relationship field or refer the property to other entity.
+        Types of Mapping
+            Following are the various ORM mappings: -
+                - One-to-one - This association is represented by @OneToOne annotation. Here, instance of each entity is related to a single instance of another entity.
+                - One-to-many - This association is represented by @OneToMany annotation. In this relationship, an instance of one entity can be related to more than one instance of another entity.
+                - Many-to-one - This mapping is defined by @ManyToOne annotation. In this relationship, multiple instances of an entity can be related to single instance of another entity.
+                - Many-to-many - This association is represented by @ManyToMany annotation. Here, multiple instances of an entity can be related to multiple instances of another entity. In this mapping, any side can be the owing side.
+
+
+Outline some of the fundamental differences in Database handling using plain JDBC versus JPA:
+        JDBC is a low level standard for interaction with databases. When using JDBC, it's up to you to translate a result set (essentially a row/column matrix of values
+             from one or more database tables, returned by your SQL query) into Java objects.
+         JPA is higher level standard for the same purpose. JPA allows you to use an object model in your application..
+
+Practical part
+                1. The diagram is a Class diagram from the Database, it describes the relation between the Customer, and the ItemType, that the customer wants to acquire.
+                   The diagram also gives, us some of the different attributes, and their relationships.    
+
+                2. 
